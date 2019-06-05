@@ -13,9 +13,9 @@ class Sfcgal(CMakePackage):
        supporting ISO 191007:2013 and OGC Simple Features for 3D operations.
     """
     homepage = "http://www.sfcgal.org/"
-    url      = "https://github.com/Oslandia/SFCGAL/archive/v1.3.6.tar.gz"
+    url      = "https://github.com/Oslandia/SFCGAL/archive/v1.3.7.tar.gz"
 
-    version('1.3.6', sha256='5840192eb4a1a4e500f65eedfebacd4bc4b9192c696ea51d719732dc2c75530a')
+    version('1.3.7', sha256='30ea1af26cb2f572c628aae08dd1953d80a69d15e1cac225390904d91fce031b')
     version('1.3.5', sha256='e36937d1d8421134c601e80a42bd535b1d9d7e7dd5bdf4da355e58942ba56006')
     version('1.3.4', sha256='87b49359eb2d88dae5f622e66e90f5efc40b675ca7885ad0cd62455803ef305f')
     version('1.3.3', sha256='57e0237b328b519ef0e274f0a24b4c266e9d5541214a3911bd68fe861a01240c')
