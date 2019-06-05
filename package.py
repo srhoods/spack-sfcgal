@@ -7,9 +7,11 @@
 
 from spack import *
 
-class Sfcgal(CMakePackage):
-    """SFCGAL is a C++ wrapper library around CGAL with the aim of supporting ISO 191007:2013 and OGC Simple Features for 3D operations."""
 
+class Sfcgal(CMakePackage):
+    """SFCGAL is a C++ wrapper library around CGAL with the aim of
+       supporting ISO 191007:2013 and OGC Simple Features for 3D operations.
+    """
     homepage = "http://www.sfcgal.org/"
     url      = "https://github.com/Oslandia/SFCGAL/archive/v1.3.6.tar.gz"
 
@@ -24,13 +26,40 @@ class Sfcgal(CMakePackage):
     version('1.2.1', sha256='928875941be8e9072698f35c1b9a119fed7cad11f71ef0785d49e0d03b765119')
     version('1.2.0', sha256='aeab3ddd7b4eff2b9b6b365ca1731de693d7a788914d4190f444ef59dead5a47')
 
-    depends_on('cmake')
-    depends_on('cgal@4.7+core')
-    depends_on('boost@1.61.0')
-    depends_on('mpfr@3.1.1')
-    depends_on('gmp@6.0.0a')
+    variant('examples', default=False,
+            description='Build SFCGAL examples')
 
-    def install(self, spec, prefix):
-        cmake('-DCMAKE_INSTALL_PREFIX=%s' % self.spec.prefix)
-        make()
-        make('install')
+    variant('tests', default=False,
+            description='Build unit, garden and regress tests')
+
+    variant('bench', default=False,
+            description='Build benchmarks')
+
+    variant('osg', default=False,
+            description='Compile with OpenSceneGraph support')
+
+    depends_on('cmake')
+
+    depends_on('cgal+core', when='@1.3.2:1.3.6')
+    depends_on('cgal@4.7+core', when='@1.2.1:1.3.1')
+    depends_on('cgal@4.6.3+core', when='@1.2.0')
+
+    depends_on('mpfr')
+    depends_on('gmp')
+    depends_on('boost@1.61.0')
+
+    depends_on('openscenegraph', when='+osg')
+
+    def cmake_args(self):
+        spec = self.spec
+
+        return [
+            '-DSFCGAL_BUILD_EXAMPLES:BOOL=%s' %
+            ('YES' if '+examples' in spec else 'NO'),
+            '-DSFCGAL_BUILD_TESTS:BOOL=%s' %
+            ('YES' if '+tests' in spec else 'NO'),
+            '-DSFCGAL_BUILD_BENCH:BOOL=%s' %
+            ('YES' if '+bench' in spec else 'NO'),
+            '-DSFCGAL_WITH_OSG:BOOL=%s' %
+            ('YES' if '+osg' in spec else 'NO'),
+        ]
