@@ -40,13 +40,14 @@ class Sfcgal(CMakePackage):
 
     depends_on('cmake')
 
-    depends_on('cgal+core', when='@1.3.2:1.3.6')
+    depends_on('cgal@4.13+core', when='@1.3.2:1.3.7')
     depends_on('cgal@4.7+core', when='@1.2.1:1.3.1')
     depends_on('cgal@4.6.3+core', when='@1.2.0')
 
     depends_on('mpfr')
     depends_on('gmp')
-    depends_on('boost@1.61.0')
+#    depends_on('boost@1.61.0')
+    depends_on('boost@1.66.0')
 
     depends_on('openscenegraph', when='+osg')
 
